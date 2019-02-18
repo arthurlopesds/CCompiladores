@@ -1,30 +1,26 @@
 import re
-from NewLexical.Tokens import Token
-from NewLexical.ExpressoesReg import REGEX_IDENTIFICADOR
-from NewLexical.ExpressoesReg import REGEX_PONTO_NUMERO_ESPACO
-from NewLexical.ExpressoesReg import REGEX_PONTO_NUMERO
-from NewLexical.ExpressoesReg import REGEX_FLOAT
-from NewLexical.ExpressoesReg import REGEX_INT
-from NewLexical.ExpressoesReg import REGEX_SIMBOLOS_RESTANTES
-from NewLexical.ExpressoesReg import ESPACO
+from Tokens import Token
+from ExpressoesReg import REGEX_IDENTIFICADOR
+from ExpressoesReg import REGEX_PONTO_NUMERO_ESPACO
+from ExpressoesReg import REGEX_PONTO_NUMERO
+from ExpressoesReg import REGEX_FLOAT
+from ExpressoesReg import REGEX_INT
+from ExpressoesReg import REGEX_SIMBOLOS_RESTANTES
+from ExpressoesReg import ESPACO
 
 class Lexico:
-    def __init__(self, lista):
+    def __init__(self,lista):
 
         self.lista = lista
         self._offset = 0
         self._tokens = []
         self.palavras_reservadas = ('program', 'var', 'integer', 'real', 'boolean', 'procedure', 'begin', 'end', 'if', 'then',
-                              'else', 'while', 'do', 'not')
+                              'else', 'while', 'do', 'not','true','false')
 
     def get_tokens(self):
         return self._tokens
 
     def criar_lista_token(self):
-        print('LISTA:')
-        print(len(self.lista))
-        print(self.lista)
-        print(self.lista[0])
         for i in range(len(self.lista)):
 
             if self.lista[i] == '':
@@ -36,13 +32,15 @@ class Lexico:
             self.set_classificacao(self.lista[i], i)
 
     def set_classificacao(self, linha, numero_linha):
+        #print('LINHA: {}'.format(linha))
         tokens = linha.split(' ')
-
+        #print('TOKENS = {}'.format(tokens))
         for palavra in tokens:
             if not palavra == '' or palavra == ' ':
                 classificacao = self.get_classificacao(palavra)
                 novo_Objeto = Token(palavra, classificacao, int(numero_linha + 1))
                 self._tokens.append(novo_Objeto)
+
 
     def get_classificacao(self, token):
 
@@ -76,20 +74,18 @@ class Lexico:
 
         pattern = re.compile(str_pattern)
         matches = pattern.finditer(linha) #Vê se a linha da match
-        print('LEN MATCH: {}'.format(matches))
+
 
         if boolean:
             self._offset = 0
 
             for match in matches: #se deu macth vem para o for para colocar os espaços
                 s = match.start()
-                print('START = {}'.format(s))
+
                 e = match.end()
-                print('END = {}'.format(e))
-                print('LINHA - START END: {}'.format(linha[s:e]))
-                print('LINHA ANTES: {}'.format(linha))
+
                 linha = self._inserir_espaco(linha, match.start() + self._offset + other_offset, match.end() + self._offset)#colocando espaços
-                print('LINHADEPOIS: {}\n'.format(linha))
+
             return linha
 
         else:
@@ -123,8 +119,7 @@ class Lexico:
 
     def _inserir_espaco(self, linha, inicio, end):
 
-        print('INICIO: {}'.format(inicio))
-        print('LINHA [:END]: {} e LINHA [END:]: {}'.format(linha[:end],linha[end:]))
+
         linha = linha[:end] + ESPACO + linha[end:] #espaço entre as sentenças
         self._offset += 1
 

@@ -28,24 +28,6 @@ class Sintatico:
                 self.next_token()
                 if self.token_atual.get_token() == ';':
                     self.next_token()
-                    if self.decVar():
-                        if self.declaracoes_de_subs():
-                            if self.comando_composto():
-                                if self.token_atual.get_token()=='.':
-                                    print('Deu Certo Parceiro')
-                                    return True
-                                else:
-                                    #print('Faltou um .| Linha: {}'.format(self.token_atual.get_linha()))
-                                    return False
-                            else:
-                                #print('ERRO COMANDCOMPOSTO | Linha: {}'.format(self.token_atual.get_linha()))
-                                return False
-                        else:
-                            #print('ERRO DECSUBS | Linha: {}'.format(self.token_atual.get_linha()))
-                            return False
-                    else:
-                        #print('ERRO DECVAR | Linha: {}'.format(self.token_atual.get_linha()))
-                        return False
                 else:
                     #print('Faltou um ; | Linha: {}'.format(self.token_atual.get_linha()))
                     return False
@@ -54,6 +36,25 @@ class Sintatico:
                 return False
         else:
             #print('Faltou o program | Linha: {}'.format(self.token_atual.get_linha()))
+            return False
+
+        if self.decVar():
+            if self.declaracoes_de_subs():
+                if self.comando_composto():
+                    if self.token_atual.get_token() == '.':
+                        print('Deu Certo Parceiro')
+                        return True
+                    else:
+                        # print('Faltou um .| Linha: {}'.format(self.token_atual.get_linha()))
+                        return False
+                else:
+                    # print('ERRO COMANDCOMPOSTO | Linha: {}'.format(self.token_atual.get_linha()))
+                    return False
+            else:
+                # print('ERRO DECSUBS | Linha: {}'.format(self.token_atual.get_linha()))
+                return False
+        else:
+            # print('ERRO DECVAR | Linha: {}'.format(self.token_atual.get_linha()))
             return False
 
 
@@ -147,17 +148,17 @@ class Sintatico:
             return False
 
     def declaracoes_de_subs(self):
-        if self.declaracao_de_subs_():
+        if self.declaracoes_de_subs_():
             return True
         else:
             print('ERRO DECLARAÇÂO DE SUBS | Linha: {}'.format(self.token_atual.get_linha()))
             return False
 
-    def declaracao_de_subs_(self):
+    def declaracoes_de_subs_(self):
         if self.declaracao_de_sub():
             if self.token_atual.get_token() == ';':
                 self.next_token()
-                return self.declaracao_de_subs_()
+                return self.declaracoes_de_subs_()
             else:
                 print('Faltou o ; | Linha: {}'.format(self.token_atual.get_linha()))
                 return False
@@ -178,7 +179,7 @@ class Sintatico:
                     if self.token_atual.get_token() == ';':
                         self.next_token()
                         if self.decVar():
-                            if self.declaracao_de_subs_():
+                            if self.declaracoes_de_subs():
                                 return self.comando_composto()
                             else:
                                 #print('ERRO DECLARAÇÃO DE SUBS | Linha: {}'.format(self.token_atual.get_linha()))
@@ -217,7 +218,7 @@ class Sintatico:
         else:
          #   print('ERRO DE ARGUMENTOS | Linha: {}'.format(self.token_atual.get_linha()))
             #self.next_token()
-            return False
+            return True
 
     def lista_de_parametros(self):
         if self.lI():
@@ -257,7 +258,7 @@ class Sintatico:
           #  return True
         else:
             #print('Faltou o ; | Linha: {}'.format(self.token_atual.get_linha()))
-            self.next_token()
+            #self.next_token()
             return True
 
     def comando_composto(self):
@@ -285,7 +286,7 @@ class Sintatico:
           #  return True
         else:
             #print('ERRO DE COMANDO | Linha: {}'.format(self.token_atual.get_linha()))
-            self.next_token()
+            #self.next_token()
             return True
 
     def lista_de_comandos(self):
@@ -307,7 +308,7 @@ class Sintatico:
           #  return True
         else:
            # print('Faltou o ; | Linha: {}'.format(self.token_atual.get_linha()))
-            self.next_token()
+           #self.next_token()
             return True
 
     def comando(self):
@@ -365,7 +366,7 @@ class Sintatico:
           #  return True
         else:
             #print('ERRO ELSE | Linha: {}'.format(self.token_atual.get_linha()))
-            self.next_token()
+            #self.next_token()
             return True
 
     def variavel(self):
@@ -418,7 +419,7 @@ class Sintatico:
           #  return True
         else:
             #print('ERRO NA LISTA DE EXPRESSAO | Linha: {}'.format(self.token_atual.get_linha()))
-            self.next_token()
+            #self.next_token()
             return True
 
     def expressao(self):
@@ -437,6 +438,8 @@ class Sintatico:
         elif self.sinal():
             if self.termo():
                 return self.expressao_simples_()
+            else:
+                return False
         else:
             return False
 
@@ -453,7 +456,7 @@ class Sintatico:
 
         else:
            # print('ERRO OP ADITIVO | Linha: {}'.format(self.token_atual.get_linha()))
-            self.next_token()
+            #self.next_token()
             return True
 
 
@@ -478,7 +481,7 @@ class Sintatico:
         else:
            # print('ERRO DE TERMO | Linha: {}'.format(self.token_atual.get_linha()))
             #self.next_token()
-            return False
+            return True
 
     def fator(self):
         if self.token_atual.get_classificacao() == 'Identificador':
@@ -497,13 +500,13 @@ class Sintatico:
                     #print('ERRO NA LISTA DE EXPRESSAO | Linha: {}'.format(self.token_atual.get_linha()))
                     return False
 
-            elif self.token_atual.get_token() == '':
-                self.next_token()
-                return True
+            #elif self.token_atual.get_token() == '':
+            #    self.next_token()
+             #   return True
 
             else:
                 #print('Faltou o ( Iron Man| Linha: {}'.format(self.token_atual.get_linha()))
-                return False
+                return True
 
         elif self.token_atual.get_classificacao() == 'Inteiro':
             self.next_token()

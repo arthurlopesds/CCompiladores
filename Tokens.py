@@ -13,3 +13,6 @@ class Token:
 
     def get_classificacao(self):
         return self._classificacao
+
+    def get_linha(self):
+        return self._linha

@@ -18,8 +18,12 @@ class LeArquivo:
                     lin = i+1
                 if comentario and not self._lista[i][j] == '}':
                     str = list(self._lista[i])
+                    #print(list(self._lista[i]))
                     str[j] = " "
+                    #print('STR[J]:{}'.format(str[j]))
+
                     self._lista[i] = ''.join(str)
+                    #print('STR:{}'.format(str))
                 else:
                     if self._lista[i][j] == '}' and comentario:
                         str = list(self._lista[i])
@@ -37,13 +41,10 @@ class LeArquivo:
 
     def _separar(self,linha):
         separar_linha = linha.split('\s')
-        print('\n')
-        print("Separar linha: {}".format(separar_linha))
-        print('\n')
         for palavra in separar_linha:
-            print('PALAVRA : {}'.format(palavra))
+            #print('PALAVRA : {}'.format(palavra))
             palavra = palavra.strip()
-            print('PALAVRA STRIPADA: {}'.format(palavra))
+            #print('PALAVRA STRIPADA: {}'.format(palavra))
 
             self._lista.append(palavra)
 
