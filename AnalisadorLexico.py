@@ -15,7 +15,7 @@ class Lexico:
         self._offset = 0
         self._tokens = []
         self.palavras_reservadas = ('program', 'var', 'integer', 'real', 'boolean', 'procedure', 'begin', 'end', 'if', 'then',
-                              'else', 'while', 'do', 'not','true','false')
+                              'else', 'while', 'do', 'not','true','false','case','of')
 
     def get_tokens(self):
         return self._tokens
@@ -38,8 +38,11 @@ class Lexico:
         for palavra in tokens:
             if not palavra == '' or palavra == ' ':
                 classificacao = self.get_classificacao(palavra)
-                novo_Objeto = Token(palavra, classificacao, int(numero_linha + 1))
-                self._tokens.append(novo_Objeto)
+                if classificacao == 'Nao foi possivel classificar':
+                    continue
+                else:
+                    novo_Objeto = Token(palavra, classificacao, int(numero_linha + 1))
+                    self._tokens.append(novo_Objeto)
 
 
     def get_classificacao(self, token):

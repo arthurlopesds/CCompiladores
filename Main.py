@@ -1,6 +1,6 @@
 from LeArquivo import LeArquivo
 from AnalisadorLexico import Lexico
-from Sintatico import Sintatico
+from Sintatico2 import Sintatico
 
 
 leituraArq = LeArquivo()
