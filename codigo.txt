@@ -1,11 +1,29 @@
-program teste; {programa exemplo}
-var
-    valor1: integer;
-    valor2: real;
+program exemplo;
+
+var a, b: integer;
+    i: real;
+
+    procedure p (x:integer;u:real;zi:boolean);
+    var b, c : integer;
+    begin
+        while( (c<9) and true ) do c:=2;
+        i:= 10.1 + 10.1 + a;
+        b:=x + c
+
+    end;
+
+    procedure op;
+    var c,d: integer;
+
+        procedure r (y:integer;z:integer);
+        var e,f,r: integer;
+        begin
+            a:=y
+        end;
+    begin
+        c:=4
+    end;
 begin
-    case 1 of
-        1: valor2:= 3;
-        2: valor2:= 4;
-        3: valor3:= 5;
-        else valor:= 7;
+    p( 1 , 1.0 , true);
+    a:=b
 end.

@@ -39,6 +39,7 @@ class Lexico:
             if not palavra == '' or palavra == ' ':
                 classificacao = self.get_classificacao(palavra)
                 if classificacao == 'Nao foi possivel classificar':
+                    print('Nao foi possivel classificar : {} | Linha: {}'.format(palavra,numero_linha+1))
                     continue
                 else:
                     novo_Objeto = Token(palavra, classificacao, int(numero_linha + 1))
